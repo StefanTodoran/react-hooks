@@ -8,13 +8,13 @@ interface Props {
 function HookImplementation({ goBack }: Props) {
   const [count, setCount] = useState(0);
 
-  // Notice how, by implementing our own custom hook, we don't just make the code
-  // cleaner, we make the event listener useEffect look the same way the broken,
-  // naive implementation does, except it works.
   const stateDependentFunction = useCurrentFunction(() => {
     return () => alert(`Count is ${count}.`);
-  }, [count]);
-
+  });
+  
+  // Notice how, by implementing our own custom hook, we don't just make the code
+  // cleaner, we make the event listener useEffect look the same way the naive 
+  // implementation tried to use stateDependentFunction, except now it works.
   useEffect(() => {
     addEventListener("doAlert", stateDependentFunction);
     return () => removeEventListener("doAlert", stateDependentFunction);
